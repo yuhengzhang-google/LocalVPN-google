@@ -41,8 +41,11 @@ public class TCPOutput implements Runnable
     private Selector selector;
 
     private Random random = new Random();
-    public TCPOutput(ConcurrentLinkedQueue<Packet> inputQueue, Selector selector, android.net.VpnService vpnService)
-    {
+    public TCPOutput(
+        ConcurrentLinkedQueue<Packet> inputQueue,
+        ConcurrentLinkedQueue<ByteBuffer> outputQueue,
+        Selector selector,
+        android.net.VpnService vpnService) {
         this.inputQueue = inputQueue;
         this.outputQueue = outputQueue;
         this.selector = selector;
