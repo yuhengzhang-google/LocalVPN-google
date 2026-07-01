@@ -71,9 +71,15 @@ public class UDPInput implements Runnable
                         receiveBuffer.position(HEADER_SIZE);
 
                         DatagramChannel inputChannel = (DatagramChannel) key.channel();
-                        // XXX: We should handle any IOExceptions here immediately,
-                        // but that probably won't happen with UDP
-                        int readBytes = inputChannel.read(receiveBuffer);
+                        int readBytes;
+                        try {
+                            readBytes = inputChannel.read(receiveBuffer);
+                        } catch (IOException e) {
+                            Log.e(TAG, "UDP read error", e);
+                            key.cancel();
+                            ByteBufferPool.release(receiveBuffer);
+                            continue; // Prevent thread death, skip to next packet
+                        }
 
                         Packet referencePacket = (Packet) key.attachment();
                         referencePacket.updateUDPBuffer(receiveBuffer, readBytes);

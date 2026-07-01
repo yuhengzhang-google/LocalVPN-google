@@ -33,7 +33,7 @@ public class UDPOutput implements Runnable
 {
     private static final String TAG = UDPOutput.class.getSimpleName();
 
-    private LocalVPNService vpnService;
+    private android.net.VpnService vpnService;
     private ConcurrentLinkedQueue<Packet> inputQueue;
     private Selector selector;
 
@@ -48,8 +48,7 @@ public class UDPOutput implements Runnable
                 }
             });
 
-    public UDPOutput(ConcurrentLinkedQueue<Packet> inputQueue, Selector selector, LocalVPNService vpnService)
-    {
+    public UDPOutput(ConcurrentLinkedQueue<Packet> inputQueue, Selector selector, android.net.VpnService vpnService) {
         this.inputQueue = inputQueue;
         this.selector = selector;
         this.vpnService = vpnService;

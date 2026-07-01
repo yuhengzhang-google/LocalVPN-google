@@ -35,14 +35,13 @@ public class TCPOutput implements Runnable
 {
     private static final String TAG = TCPOutput.class.getSimpleName();
 
-    private LocalVPNService vpnService;
+    private android.net.VpnService vpnService;
     private ConcurrentLinkedQueue<Packet> inputQueue;
     private ConcurrentLinkedQueue<ByteBuffer> outputQueue;
     private Selector selector;
 
     private Random random = new Random();
-    public TCPOutput(ConcurrentLinkedQueue<Packet> inputQueue, ConcurrentLinkedQueue<ByteBuffer> outputQueue,
-                     Selector selector, LocalVPNService vpnService)
+    public TCPOutput(ConcurrentLinkedQueue<Packet> inputQueue, Selector selector, android.net.VpnService vpnService)
     {
         this.inputQueue = inputQueue;
         this.outputQueue = outputQueue;
@@ -266,7 +265,7 @@ public class TCPOutput implements Runnable
 
     private void closeCleanly(TCB tcb, ByteBuffer buffer)
     {
-        ByteBufferPool.release(buffer);
+        // ByteBufferPool.release(buffer); // Commented out to prevent double-free corruption
         TCB.closeTCB(tcb);
     }
 }

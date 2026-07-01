@@ -236,7 +236,7 @@ public class Packet
             UDP(17),
             Other(0xFF);
 
-            private int protocolNumber;
+            private final int protocolNumber;
 
             TransportProtocol(int protocolNumber)
             {
